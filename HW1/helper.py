@@ -62,4 +62,10 @@ class Helper(object):
                 fields = [username, new_password, 0]
                 writer.writerow(fields)
                 return username
+    
+    def afterLogin(self, username):
+        print("+" * 60)
+        print(" " * 12 + "Login successful!")
+        print(" " * 12 + "Logged in as:", username)
+        print("+" * 60)
 
