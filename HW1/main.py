@@ -1,8 +1,12 @@
-import helper
+import helper, commands, currency
 
 helper = helper.Helper() 
+commands = commands.Commands()
+currency = currency.Currency()
 
 helper.splashScreen()
 username = helper.appLogin()
-print("Returned username is:", username)
+helper.afterLogin(username)
+
+commands.getCommand()
 
