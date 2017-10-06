@@ -1,6 +1,6 @@
 # Class to support currency conversions
 
-import re, numbers, csv
+import re, numbers, csv, os
 
 class Currency(object):
     # Ensure there is only one instance of Currency
@@ -27,6 +27,7 @@ class Currency(object):
             3 - GBP (£)
             ''')
         currency_type = str(input("Choose currency type to deposit: "))
+        # Get currency type (USD, Euro, or GBP)
         while (currency_type != '1' and currency_type != '2' and currency_type != '3'):
             print("+" * 60)
             print("Invalid currency type entered! Please try again.")
@@ -40,7 +41,8 @@ class Currency(object):
             currency_type = str(input("Choose currency type to deposit: "))
 
         print("Currency type is:", currency_type)   
-
+        
+        # Use regex to parse input and get amount
         amount = 0
         while (True):
             amount = input("Enter amount to deposit: ")
@@ -67,25 +69,44 @@ class Currency(object):
         amount = float(amount_pattern.group())
         print("Final amount:", amount)
 
-        '''
-
+        # Since we can't write to specific cell in csv, make new temporary csv without the current
+        # user's information but save user's information. Then copy temporary csv into main csv again
+        # Finally, append the new information since csv only allows append
+        old_balance = ''
+        old_password = ''
+        # Transfer real csv into temporary csv without user's information
+        with open('data.csv', 'r') as inputfile:
+            with open('data_new.csv', 'w') as outfile:
+                reader = csv.reader(inputfile)
+                writer = csv.writer(outfile)
                 for row in reader:
-                    username, password, total = row
-                    if username == row[0]:
-                        fields = [username, row[1], (float(row[2]) + float(amount))]
-                        writer.writerow(fields)
-        '''
-
-
-
-
-
-
-
-
-
-
-        print("Deposited " + str(amount) + " into your account!") 
+                    user, password, total = row
+                    if username != row[0]:
+                        field = [user, password, total]
+                        writer.writerow(field)
+                    else:
+                        old_balance = str(total)
+                        old_password = str(password)
+        # Overwrite real csv with temporary csv 
+        with open('data_new.csv', 'r') as inputfile:
+            with open('data.csv', 'w') as outfile:
+                reader = csv.reader(inputfile)
+                writer = csv.writer(outfile)
+                for row in reader:
+                    user, password, total = row
+                    field = [user, password, total]
+                    writer.writerow(field)
+        # Append updated information into real csv
+        with open('data.csv', 'a') as inputfile:
+            writer = csv.writer(inputfile)
+            new_balance = str((float(old_balance) + float(amount)))
+            fields = [username, old_password, new_balance]
+            writer.writerow(fields)
+        
+        # Remove temporary csv file
+        os.remove('data_new.csv')
+                     
+        print("Deposited " + str(amount) + " successfully into your account!") 
           
          
 
