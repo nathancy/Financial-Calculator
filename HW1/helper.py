@@ -3,6 +3,7 @@
 import csv
 
 class Helper(object):
+    '''
     # Ensure there is only one instance of Helper 
     _instances=[]
 
@@ -12,6 +13,7 @@ class Helper(object):
             print("ERROR: One instance of Helper is running already.")
             exit(1)
         self._instances.append(self)
+    '''
     
     # Print splash screen
     def splashScreen(self):
@@ -68,4 +70,12 @@ class Helper(object):
         print(" " * 12 + "Login successful!")
         print(" " * 12 + "Logged in as:", username)
         print("+" * 60)
+
+    def currencySelected(self, currency_type):
+        if currency_type == '1':
+            print("Currency selected: USD")
+        elif currency_type == '2':
+            print("Currency selected: EURO")
+        elif currency_type == '3':
+            print("Currency selected: GBP")
 

@@ -60,6 +60,9 @@ class Commands(object):
         # Current Balance
         elif (command == 'c'):
             currency.balance(username)
+        # Withdrawl 
+        elif (command == 'w'):
+            currency.withdrawl(username)
 
             
 
