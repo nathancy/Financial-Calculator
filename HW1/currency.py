@@ -15,10 +15,16 @@ class Currency(object):
             print("ERROR: One instance of Currency is running already.")
             exit(1)
         self._instances.append(self)
-    
+   
+    # Display current balance
     def balance(self, username):
-        print("hello")
-
+        print("+" * 60)
+        with open('data.csv', 'r') as inputfile:
+            reader = csv.reader(inputfile)
+            for row in reader:
+                user, password, total = row
+                if user == username:
+                    print("Current balance is: $" + str(total)) 
 
     def deposit(self, username):
         print("+" * 60)
@@ -138,7 +144,7 @@ class Currency(object):
             print("Successfully deposited €" + str(original_amount) + " ($" + final_amount + ") into your account!") 
         elif currency_type == '3':
             print("Successfully deposited £" + str(original_amount) + " ($" + final_amount + ") into your account!") 
-        
+        print("+" * 60)
             
             
             
