@@ -2,6 +2,9 @@
 
 import re, numbers, csv, os
 
+EURO = 1.17 
+GBP = 1.31
+
 class Currency(object):
     # Ensure there is only one instance of Currency
     _instances=[]
@@ -68,6 +71,10 @@ class Currency(object):
         print(type(amount_pattern.group()))
         amount = float(amount_pattern.group())
         print("Final amount:", amount)
+        original_amount = amount
+
+        # Convert currency
+        amount = self.currencyConverter(currency_type, amount)
 
         # Since we can't write to specific cell in csv, make new temporary csv without the current
         # user's information but save user's information. Then copy temporary csv into main csv again
@@ -105,11 +112,37 @@ class Currency(object):
         
         # Remove temporary csv file
         os.remove('data_new.csv')
-                     
-        print("Deposited " + str(amount) + " successfully into your account!") 
-          
-         
 
+        self.currencyExchangeRate(currency_type, str(original_amount), str(amount))
+            
+    # Convert currency. 1 - USD, 2 - EURO, 3 - GBP
+    def currencyConverter(self, currency_type, amount):
+        if currency_type == '1':
+            return amount
+        elif currency_type == '2':
+            return (float(amount) * float(EURO))
+        elif currency_type == '3':
+            return (float(amount) * float(GBP))
     
-    def currencyConverter(self):
-        print("test")
+    # Print currency rates and deposit amount
+    def currencyExchangeRate(self, currency_type, original_amount, final_amount):
+        print('''
+        Current conversion rates:
+
+        1 USD = 0.85 Euro
+        1 USD = 0.77 GBP
+        ''')
+        if currency_type == '1':
+            print("Successfully deposited $" + str(final_amount) + " into your account!") 
+        elif currency_type == '2':
+            print("Successfully deposited €" + str(original_amount) + " ($" + final_amount + ") into your account!") 
+        elif currency_type == '3':
+            print("Successfully deposited £" + str(original_amount) + " ($" + final_amount + ") into your account!") 
+        
+            
+            
+            
+
+
+
+
