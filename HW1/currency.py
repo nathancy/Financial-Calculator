@@ -138,13 +138,13 @@ class Currency(object):
         1 USD = 0.85 Euro
         1 USD = 0.77 GBP
         ''')
+        print("+" * 60)
         if currency_type == '1':
             print("Successfully deposited $" + str(final_amount) + " into your account!") 
         elif currency_type == '2':
             print("Successfully deposited €" + str(original_amount) + " ($" + final_amount + ") into your account!") 
         elif currency_type == '3':
             print("Successfully deposited £" + str(original_amount) + " ($" + final_amount + ") into your account!") 
-        print("+" * 60)
             
             
             

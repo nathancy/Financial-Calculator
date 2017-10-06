@@ -17,6 +17,7 @@ class Commands(object):
     
     # Print list of commands and return command
     def getCommand(self):
+        print("+" * 60)
         command = input('''
             Commands:
 
@@ -59,5 +60,6 @@ class Commands(object):
         # Current Balance
         elif (command == 'c'):
             currency.balance(username)
+
             
 
