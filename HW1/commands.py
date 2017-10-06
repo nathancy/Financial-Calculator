@@ -1,5 +1,9 @@
 # Class to support input commands 
 
+import currency, helper
+currency = currency.Currency()
+helper = helper.Helper()
+
 class Commands(object):
     # Ensure there is only one instance of Commands
     _instances=[]
@@ -18,12 +22,14 @@ class Commands(object):
 
             d - Deposit
             w - Withdrawl
-            b - Balance 
+            c - Current Balance 
             h - Help
             q - Quit
 
             ''')
-        while (command != 'd' and command != 'w' and command != 'b' and command != 'h' and command != 'q'):
+        if command.isalpha(): 
+            command = command.lower()
+        while (command != 'd' and command != 'w' and command != 'c' and command != 'h' and command != 'q'):
             print("+" * 60)
             print("Invalid command entered! Please try again.")
             command = input('''
@@ -31,11 +37,27 @@ class Commands(object):
 
             d - Deposit
             w - Withdrawl
-            b - Balance 
+            c - Current Balance 
             h - Help
             q - Quit
 
             ''')
+            if command.isalpha(): 
+                command = command.lower()
             print(" ")
-            return command
+
+        return command
+    
+    def commandExecute(self, command, username):
+        # Quit
+        if (command == 'q'):
+            print("Exiting financial calculator")
+            exit(1)
+        # Deposit
+        elif (command == 'd'):
+            currency.deposit(username)
+        # Current Balance
+        elif (command == 'c'):
+            currency.balance(username)
             
+
