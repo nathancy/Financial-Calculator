@@ -22,7 +22,7 @@ class Commands(object):
             Commands:
 
             d - Deposit
-            w - Withdrawl
+            w - Withdraw
             c - Current Balance 
             h - Help
             q - Quit
@@ -37,7 +37,7 @@ class Commands(object):
             Commands:
 
             d - Deposit
-            w - Withdrawl
+            w - Withdraw
             c - Current Balance 
             h - Help
             q - Quit
@@ -60,7 +60,7 @@ class Commands(object):
         # Current Balance
         elif (command == 'c'):
             currency.balance(username)
-        # Withdrawl 
+        # Withdraw 
         elif (command == 'w'):
-            currency.withdrawl(username)
+            currency.withdraw(username)
 

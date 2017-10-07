@@ -28,29 +28,29 @@ class Currency(object):
                     print("Current balance is: $" + str(total)) 
                     return str(total)
     
-    # Withdrawl currency from account
-    def withdrawl(self, username):
+    # Withdraw currency from account
+    def withdraw(self, username):
         print("+" * 60)
         print('''
-            Currency types available to withdrawl:
+            Currency types available to withdraw:
 
             1 - USD ($)
             2 - Euro (€)
             3 - GBP (£)
             ''')
-        currency_type = str(input("Choose currency type to withdrawl: "))
+        currency_type = str(input("Choose currency type to withdraw: "))
         # Get currency type (USD, Euro, or GBP)
         while (currency_type != '1' and currency_type != '2' and currency_type != '3'):
             print("+" * 60)
             print("Invalid currency type entered! Please try again.")
             print('''
-            Currency types available to withdrawl:
+            Currency types available to withdraw:
 
             1 - USD ($)
             2 - Euro (€)
             3 - GBP (£)
             ''')
-            currency_type = str(input("Choose currency type to withdrawl deposit: "))
+            currency_type = str(input("Choose currency type to withdraw deposit: "))
 
         # Print selected currency message
         helper.currencySelected(currency_type)
@@ -58,7 +58,7 @@ class Currency(object):
         # Use regex to parse input and get amount
         amount = 0
         while (True):
-            amount = input("Enter amount to withdrawl: ")
+            amount = input("Enter amount to withdraw: ")
             #print("Amount is:", amount)
             #print("Amount type is", type(amount))
             try:
@@ -73,7 +73,7 @@ class Currency(object):
                     break;
             except ValueError:
                 print("+" * 60)
-                print("Invalid withdrawl amount entered! Please try again.")
+                print("Invalid withdraw amount entered! Please try again.")
 
         amount = str(amount) 
         #print("Amount after loop is:", amount)
@@ -126,7 +126,7 @@ class Currency(object):
         # Remove temporary csv file
         os.remove('data_new.csv')
 
-        mode = 'withdrawl'
+        mode = 'withdraw'
         self.currencyExchangeRate(currency_type, str(original_amount), str(amount), mode)
 
     # Deposit currency into account
@@ -252,7 +252,7 @@ class Currency(object):
                 print("Successfully deposited €" + str(original_amount) + " ($" + final_amount + ") into your account!") 
             elif currency_type == '3':
                 print("Successfully deposited £" + str(original_amount) + " ($" + final_amount + ") into your account!") 
-        elif mode == 'withdrawl':
+        elif mode == 'withdraw':
             print('''
             Current conversion rates:
 
