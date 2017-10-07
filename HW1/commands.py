@@ -46,9 +46,9 @@ class Commands(object):
             if command.isalpha(): 
                 command = command.lower()
             print(" ")
-
         return command
-    
+   
+    # Execute the given command 
     def commandExecute(self, command, username):
         # Quit
         if (command == 'q'):
@@ -63,6 +63,4 @@ class Commands(object):
         # Withdrawl 
         elif (command == 'w'):
             currency.withdrawl(username)
-
-            
 

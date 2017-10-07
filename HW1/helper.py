@@ -33,7 +33,7 @@ class Helper(object):
         print("For returning users, enter your username")
         print("For new users, enter a new username and password")
 
-        username = input("")
+        username = input("Username: ")
         
         with open('data.csv') as inputfile:
             
@@ -46,13 +46,13 @@ class Helper(object):
                     #print("line[1] is:", line[1])
                     #print("Username found:", username)
                     #print("Checking password now")
-                    password = input("Enter password: ")
+                    password = input("Password: ")
                     #print("Entered password is:", password)
                     while password != line[1]:
                         #print("Entered password was is:", password)
                         print("Incorrect password, please try again!")
                         #print("line[1] is:", line[1])
-                        password = input("Enter password: ")
+                        password = input("Password: ")
                     return username
 
             # If it gets here, it means its a new user not in the database
@@ -64,13 +64,15 @@ class Helper(object):
                 fields = [username, new_password, 0]
                 writer.writerow(fields)
                 return username
-    
+   
+    # Print login successful information
     def afterLogin(self, username):
         print("+" * 60)
         print(" " * 12 + "Login successful!")
         print(" " * 12 + "Logged in as:", username)
         print("+" * 60)
-
+    
+    # Print selected currency information
     def currencySelected(self, currency_type):
         if currency_type == '1':
             print("Currency selected: USD")
