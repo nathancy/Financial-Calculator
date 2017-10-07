@@ -52,20 +52,21 @@ class Currency(object):
             ''')
             currency_type = str(input("Choose currency type to withdrawl deposit: "))
 
+        # Print selected currency message
         helper.currencySelected(currency_type)
         
         # Use regex to parse input and get amount
         amount = 0
         while (True):
             amount = input("Enter amount to withdrawl: ")
-            print("Amount is:", amount)
-            print("Amount type is", type(amount))
+            #print("Amount is:", amount)
+            #print("Amount type is", type(amount))
             try:
                 if '.' in amount:
                     amount = float(amount)
                 else:
                     amount = int(amount)
-                if (float(self.currencyConverter(currency_type, amount)) > float(self.balance(username))):
+                if (abs(float(self.currencyConverter(currency_type, amount))) > float(self.balance(username))):
                     print("You don't have enough funds! Please try again.")
                     continue;
                 if (isinstance(amount, numbers.Real)):
@@ -75,14 +76,14 @@ class Currency(object):
                 print("Invalid withdrawl amount entered! Please try again.")
 
         amount = str(amount) 
-        print("Amount after loop is:", amount)
+        #print("Amount after loop is:", amount)
 
         amount_regex = re.compile(r'(\d+(?:\.\d{1,2})?)')
         amount_pattern = amount_regex.search(amount)
-        print(amount_pattern.group())
-        print(type(amount_pattern.group()))
+        #print(amount_pattern.group())
+        #print(type(amount_pattern.group()))
         amount = float(amount_pattern.group())
-        print("Final amount:", amount)
+        #print("Final amount:", amount)
         original_amount = amount
 
         # Convert currency
@@ -152,14 +153,15 @@ class Currency(object):
             ''')
             currency_type = str(input("Choose currency type to deposit: "))
 
+        # Display currency selected
         helper.currencySelected(currency_type)
         
         # Use regex to parse input and get amount
         amount = 0
         while (True):
             amount = input("Enter amount to deposit: ")
-            print("Amount is:", amount)
-            print("Amount type is", type(amount))
+            #print("Amount is:", amount)
+            #print("Amount type is", type(amount))
             try:
                 if '.' in amount:
                     amount = float(amount)
@@ -172,14 +174,14 @@ class Currency(object):
                 print("Invalid deposit amount entered! Please try again.")
 
         amount = str(amount) 
-        print("Amount after loop is:", amount)
+        #print("Amount after loop is:", amount)
 
         amount_regex = re.compile(r'(\d+(?:\.\d{1,2})?)')
         amount_pattern = amount_regex.search(amount)
-        print(amount_pattern.group())
-        print(type(amount_pattern.group()))
+        #print(amount_pattern.group())
+        #print(type(amount_pattern.group()))
         amount = float(amount_pattern.group())
-        print("Final amount:", amount)
+        #print("Final amount:", amount)
         original_amount = amount
 
         # Convert currency
@@ -265,4 +267,3 @@ class Currency(object):
             elif currency_type == '3':
                 print("Successfully withdrew £" + str(original_amount) + " ($" + final_amount + ") from your account!") 
                 
-
