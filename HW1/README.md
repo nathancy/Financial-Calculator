@@ -19,11 +19,11 @@ python main.py
 For first time users, enter a new username and password. For returning users, the information is stored in the database and verifies password credentials. After logging in, the user can deposit, withdraw, or view current balance. To deposit, choose currency type (USD, Euro, or GBP) then enter the amount to deposit. The conversion will be done automatically in the background. Similarly, to withdraw currency, select the currency type and enter the amount to withdraw. The user can also view the current balance in the account. Regex will validate currency inputs so it will keep retrying until correct input is given. 
 
 # Examples
-Credential Login
+### Credential Login
 ![](docs/calculator1.png)
 
-Deposit
+### Deposit
 ![](docs/calculator2.png)
 
-Current Balance
+### Current Balance
 ![](docs/calculator3.png)
