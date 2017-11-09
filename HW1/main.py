@@ -15,11 +15,22 @@ username = helper.appLogin()
 # Print successful credential login
 helper.afterLogin(username)
 
-# Get user commands
-command = commands.getCommand()
-if command == 'q':
-    commands.commandExecute(command) 
-while (command != 'q'):
-    commands.commandExecute(command, username) 
+# Get user or admin commands
+if username == "admin":
+    command = commands.getCommandAdmin()
+else:
     command = commands.getCommand()
+
+# User quits right after login
+if command == 'q':
+    commands.commandExecute(command, username)
+while (command != 'q'):
+    # Admin prompt
+    if username == "admin":
+        commands.commandExecute(command, username)
+        command = commands.getCommandAdmin()
+    # Regular user prompt
+    else:
+        commands.commandExecute(command, username) 
+        command = commands.getCommand()
 
