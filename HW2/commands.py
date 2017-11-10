@@ -1,8 +1,9 @@
 # Class to support input commands 
 
-import currency, helper
+import currency, helper, admin
 currency = currency.Currency()
 helper = helper.Helper()
+admin = admin.Admin()
 
 class Commands(object):
     # Ensure there is only one instance of Commands
@@ -14,8 +15,45 @@ class Commands(object):
             print("ERROR: One instance of Commands is running already.")
             exit(1)
         self._instances.append(self)
+
+    # (Admin user) Print list of commands and return command
+    def getCommandAdmin(self):
+        print("+" * 60)
+        command = input('''
+            Commands:
+            
+            a - Add User
+            r - Remove User
+            d - Deposit
+            w - Withdraw
+            c - Current Balance 
+            h - Help
+            q - Quit
+
+            ''')
+        if command.isalpha(): 
+            command = command.lower()
+        while (command != 'd' and command != 'w' and command != 'c' and command != 'h' and command != 'q' and command != 'a' and command != 'r'):
+            print("+" * 60)
+            print("Invalid command entered! Please try again.")
+            command = input('''
+            Commands:
+
+            a - Add User
+            r - Remove User
+            d - Deposit
+            w - Withdraw
+            c - Current Balance 
+            h - Help
+            q - Quit
+
+            ''')
+            if command.isalpha(): 
+                command = command.lower()
+            print(" ")
+        return command
     
-    # Print list of commands and return command
+    # (Normal user) Print list of commands and return command
     def getCommand(self):
         print("+" * 60)
         command = input('''
@@ -54,6 +92,12 @@ class Commands(object):
         if (command == 'q'):
             print("Exiting financial calculator")
             exit(1)
+        # Add user (ADMIN ONLY COMMAND)
+        elif (command == 'a' and username == 'admin'):
+            admin.addUser()
+        # Remove user (ADMIN ONLY COMMAND)
+        elif (command == 'r' and username == 'admin'):
+            admin.removeUser()
         # Deposit
         elif (command == 'd'):
             currency.deposit(username)
