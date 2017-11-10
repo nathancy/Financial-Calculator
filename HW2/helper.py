@@ -30,13 +30,26 @@ class Helper(object):
     def appLogin(self):
         print("Please login with your credentials")
         print(" ")
-        print("For returning users, enter your username")
-        print("For new users, enter a new username and password")
+        #print("For returning users, enter your username")
+        #print("For new users, enter a new username and password")
 
-        username = input("Username: ")
-        
+        # Put all usernames into set 
+        userset = set()
         with open('data.csv') as inputfile:
-            
+            csvfile = csv.reader(inputfile)
+            next(csvfile)
+
+            for line in csvfile:
+                userset.add(line[0])
+        
+        # Check to see if username is in database
+        username = input("Username: ")
+        while (username not in userset):
+            print("\"" + username + "\" is not registered. Please try again!")
+            print("Please login as \"admin\" to add/remove users (Username: admin, Password: password)")
+            username = input("Username: ")
+
+        with open('data.csv') as inputfile:
             csvfile = csv.reader(inputfile)
             next(csvfile)
             
@@ -55,16 +68,6 @@ class Helper(object):
                         password = input("Password: ")
                     return username
 
-            # If it gets here, it means its a new user not in the database
-            new_password = input("Enter new password: ")
-            with open('data.csv', 'a') as inputfile:
-                writer = csv.writer(inputfile)
-
-                # Create .csv row with username, password, and set total to 0
-                fields = [username, new_password, 0]
-                writer.writerow(fields)
-                return username
-   
     # Print login successful information
     def afterLogin(self, username):
         print("+" * 60)
