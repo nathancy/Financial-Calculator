@@ -23,7 +23,7 @@ class Currency(object):
         with open('data.csv', 'r') as inputfile:
             reader = csv.reader(inputfile)
             for row in reader:
-                user, password, total = row
+                user, password, total, salt = row
                 if user == username:
                     print("Current balance is: $" + str(total)) 
                     return str(total)
@@ -94,33 +94,35 @@ class Currency(object):
         # Finally, append the new information since csv only allows append
         old_balance = ''
         old_password = ''
+        salt_save= ''
         # Transfer real csv into temporary csv without user's information
         with open('data.csv', 'r') as inputfile:
             with open('data_new.csv', 'w') as outfile:
                 reader = csv.reader(inputfile)
                 writer = csv.writer(outfile)
                 for row in reader:
-                    user, password, total = row
+                    user, hashed_password, total, salt = row
                     if username != row[0]:
-                        field = [user, password, total]
+                        field = [user, hashed_password, total, salt]
                         writer.writerow(field)
                     else:
                         old_balance = str(total)
-                        old_password = str(password)
+                        old_password = str(hashed_password)
+                        salt_save = salt
         # Overwrite real csv with temporary csv 
         with open('data_new.csv', 'r') as inputfile:
             with open('data.csv', 'w') as outfile:
                 reader = csv.reader(inputfile)
                 writer = csv.writer(outfile)
                 for row in reader:
-                    user, password, total = row
-                    field = [user, password, total]
+                    user, hashed_password, total, salt = row
+                    field = [user, hashed_password, total, salt]
                     writer.writerow(field)
         # Append updated information into real csv
         with open('data.csv', 'a') as inputfile:
             writer = csv.writer(inputfile)
             new_balance = str((float(old_balance) - float(amount)))
-            fields = [username, old_password, new_balance]
+            fields = [username, old_password, new_balance, salt_save]
             writer.writerow(fields)
         
         # Remove temporary csv file
@@ -192,33 +194,35 @@ class Currency(object):
         # Finally, append the new information since csv only allows append
         old_balance = ''
         old_password = ''
+        salt_save = ''
         # Transfer real csv into temporary csv without user's information
         with open('data.csv', 'r') as inputfile:
             with open('data_new.csv', 'w') as outfile:
                 reader = csv.reader(inputfile)
                 writer = csv.writer(outfile)
                 for row in reader:
-                    user, password, total = row
+                    user, password, total, salt = row
                     if username != row[0]:
-                        field = [user, password, total]
+                        field = [user, password, total, salt]
                         writer.writerow(field)
                     else:
                         old_balance = str(total)
                         old_password = str(password)
+                        salt_save = salt
         # Overwrite real csv with temporary csv 
         with open('data_new.csv', 'r') as inputfile:
             with open('data.csv', 'w') as outfile:
                 reader = csv.reader(inputfile)
                 writer = csv.writer(outfile)
                 for row in reader:
-                    user, password, total = row
-                    field = [user, password, total]
+                    user, password, total, salt = row
+                    field = [user, password, total, salt]
                     writer.writerow(field)
         # Append updated information into real csv
         with open('data.csv', 'a') as inputfile:
             writer = csv.writer(inputfile)
             new_balance = str((float(old_balance) + float(amount)))
-            fields = [username, old_password, new_balance]
+            fields = [username, old_password, new_balance, salt_save]
             writer.writerow(fields)
         
         # Remove temporary csv file

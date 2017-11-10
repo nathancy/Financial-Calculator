@@ -49,6 +49,7 @@ class Admin(object):
             # Create .csv row with username, hashed password, set total to 0, and log salt
             fields = [new_user, hashed_password, 0, salt]
             writer.writerow(fields)
+
         print("\"" + new_user + "\" has been added to the database!")
         print("Default currency set to USD")
 
@@ -78,9 +79,9 @@ class Admin(object):
                 reader = csv.reader(inputfile)
                 writer = csv.writer(outfile)
                 for row in reader:
-                    user, password, total = row
+                    user, hashed_password, total, salt = row
                     if delete_user != row[0]:
-                        field = [user, password, total]
+                        field = [user, hashed_password, total, salt]
                         writer.writerow(field)
 
         # Overwrite real csv with temporary csv
@@ -89,8 +90,8 @@ class Admin(object):
                 reader = csv.reader(inputfile)
                 writer = csv.writer(outfile)
                 for row in reader:
-                    user, password, total = row
-                    field = [user, password, total]
+                    user, hashed_password, total, salt = row
+                    field = [user, hashed_password, total, salt]
                     writer.writerow(field)
 
         # Remove temporary csv file

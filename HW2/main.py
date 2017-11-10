@@ -33,4 +33,4 @@ while (command != 'q'):
     else:
         commands.commandExecute(command, username) 
         command = commands.getCommand()
-
+print("Exiting financial calculator")
