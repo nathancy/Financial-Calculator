@@ -24,6 +24,7 @@ class Commands(object):
             
             a - Add User
             r - Remove User
+            l - List Users
             d - Deposit
             w - Withdraw
             c - Current Balance 
@@ -33,7 +34,7 @@ class Commands(object):
             ''')
         if command.isalpha(): 
             command = command.lower()
-        while (command != 'd' and command != 'w' and command != 'c' and command != 'h' and command != 'q' and command != 'a' and command != 'r'):
+        while (command != 'd' and command != 'w' and command != 'c' and command != 'h' and command != 'q' and command != 'a' and command != 'r' and command != 'l'):
             print("+" * 60)
             print("Invalid command entered! Please try again.")
             command = input('''
@@ -41,6 +42,7 @@ class Commands(object):
 
             a - Add User
             r - Remove User
+            l - List Users
             d - Deposit
             w - Withdraw
             c - Current Balance 
@@ -98,6 +100,9 @@ class Commands(object):
         # Remove user (ADMIN ONLY COMMAND)
         elif (command == 'r' and username == 'admin'):
             admin.removeUser()
+        # List usernames in database (ADMIN ONLY COMMAND)
+        elif (command == 'l' and username == 'admin'):
+            admin.userList()
         # Deposit
         elif (command == 'd'):
             currency.deposit(username)

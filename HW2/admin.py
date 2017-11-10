@@ -15,7 +15,17 @@ class Admin(object):
             print("ERROR: One instance of Commands is running already.")
             exit(1)
         self._instances.append(self)
-    
+
+    # List all usernames in database
+    def userList(self):
+        print("+" * 60)
+        with open('data.csv', 'r') as inputfile:
+            reader = csv.reader(inputfile)
+            next(reader)
+            for row in reader:
+                user, password, total, salt = row
+                print(user) 
+
     # Add user to database
     def addUser(self):
         # Put all usernames into set 
@@ -27,9 +37,15 @@ class Admin(object):
             for line in csvfile:
                 userset.add(line[0])
 
+        print("Enter 'exit' to cancel")
+
         # Get new user's username
         new_user = input("Enter new user's username: ")
-        while (new_user in userset):
+        while (new_user in userset or new_user == 'exit'):
+            if (new_user == 'exit'):
+                print("+" * 60)
+                print("Add user action aborted!")
+                return
             print("\"" + new_user + "\" is already registered. Please try again!")
             new_user = input("Enter new user's username: ")
         
@@ -50,6 +66,7 @@ class Admin(object):
             fields = [new_user, hashed_password, 0, salt]
             writer.writerow(fields)
 
+        print("+" * 60)
         print("\"" + new_user + "\" has been added to the database!")
         print("Default currency set to USD")
 
@@ -63,10 +80,20 @@ class Admin(object):
             
             for line in csvfile:
                 userset.add(line[0])
+        
+        print("Enter 'exit' to cancel")
 
         # Get username to delete 
         delete_user = input("Enter username to remove: ")
-        while (delete_user not in userset):
+        while (delete_user not in userset or delete_user == 'admin' or delete_user == 'exit'):
+            if (delete_user == 'admin'):
+                print("The 'admin' account cannot be removed! Please try again!")
+                delete_user = input("Enter username to remove: ")
+                continue;
+            if (delete_user == 'exit'):
+                print("+" * 60)
+                print("Remove user action aborted!")
+                return
             print("\"" + delete_user+ "\" is not in database. Please try again!")
             delete_user = input("Enter username to remove: ")
         
@@ -97,6 +124,7 @@ class Admin(object):
         # Remove temporary csv file
         os.remove('data_new.csv')
         
+        print("+" * 60)
         print("\"" + delete_user + "\" has been removed from the database!")
          
    
