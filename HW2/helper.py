@@ -1,6 +1,8 @@
 # Class to support login, splash screens, and standard output
 
-import csv
+import csv, hashlib
+
+ATTEMPT_ERRORS = 3
 
 class Helper(object):
     '''
@@ -46,26 +48,36 @@ class Helper(object):
         username = input("Username: ")
         while (username not in userset):
             print("\"" + username + "\" is not registered. Please try again!")
-            print("Please login as \"admin\" to add/remove users (Username: admin, Password: password)")
+            print("Please login as \"admin\" to add/remove users")
+            print("(Username: admin, Password: password)")
             username = input("Username: ")
 
+        # Validate password
         with open('data.csv') as inputfile:
             csvfile = csv.reader(inputfile)
             next(csvfile)
             
-            #print("Username before check:", username)
             for line in csvfile:
                 if username == line[0]:
-                    #print("line[1] is:", line[1])
-                    #print("Username found:", username)
-                    #print("Checking password now")
                     password = input("Password: ")
-                    #print("Entered password is:", password)
-                    while password != line[1]:
-                        #print("Entered password was is:", password)
+                    error_count = 0
+
+                    # Generate hashed_password using SHA512
+                    hashed_password = hashlib.sha512(str(password + line[3]).encode('utf-8')).hexdigest()
+                    
+                    # Validate password
+                    while hashed_password != line[1]:
+                        if (error_count == ATTEMPT_ERRORS):
+                            print("You have reached the maximum number of tries")
+                            print("Authentication failed!")
+                            exit(1)
                         print("Incorrect password, please try again!")
-                        #print("line[1] is:", line[1])
+                        print(str(ATTEMPT_ERRORS - error_count) + " attempts remaining!")
+                        error_count += 1
                         password = input("Password: ")
+
+                        # Generate hashed_password using SHA512
+                        hashed_password = hashlib.sha512(str(password + line[3]).encode('utf-8')).hexdigest()
                     return username
 
     # Print login successful information

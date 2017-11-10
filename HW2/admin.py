@@ -1,6 +1,9 @@
 # Class for all admin commands/interactions
 
-import csv, os
+import csv, os, random, hashlib
+
+# String used to generate salt
+ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" 
 
 class Admin(object):
     # Ensure there is only one instance of Commands
@@ -32,15 +35,22 @@ class Admin(object):
         
         # Get new user's password
         new_password = input("Enter new password: ")
+        
+        # Generate salt
+        salt = ''.join(random.choice(ALPHABET) for i in range(16))
 
-        # Add in the new username and password into database
+        # Generate hashed_password using SHA512
+        hashed_password = hashlib.sha512(str(new_password + salt).encode('utf-8')).hexdigest()
+
+        # Add in the new username and hashed_password into database
         with open('data.csv', 'a') as inputfile:
             writer = csv.writer(inputfile)
-
-            # Create .csv row with username, password, and set total to 0
-            fields = [new_user, new_password, 0]
+            
+            # Create .csv row with username, hashed password, set total to 0, and log salt
+            fields = [new_user, hashed_password, 0, salt]
             writer.writerow(fields)
         print("\"" + new_user + "\" has been added to the database!")
+        print("Default currency set to USD")
 
     # Remove user from database
     def removeUser(self):
