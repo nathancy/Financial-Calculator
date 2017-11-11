@@ -35,7 +35,7 @@ For first time users, enter a new username and password. For returning users, th
 ![](docs/calculator1.png)
 
 ### Add user
-![](docs/calculator4.png)
+![](docs/calculator4.PNG)
 
 ### Remove user
 ![](docs/calculator5.png)
