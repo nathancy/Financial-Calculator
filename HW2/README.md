@@ -1,4 +1,3 @@
-B
 # Financial Calculator
 The financial calculator keeps track of users, hashed passwords, salts, and the current balance. After logging into the application, available options are deposit, withdraw, transfer, view current balance, view users, help, and quit. The program uses regex to validate the input which will reject the user if invalid input is provided. The information for each user is stored in a .csv file. The application uses SHA512 encryption and a salt to ensure duplicate passwords are always unique.
 
